@@ -1,3 +1,31 @@
+<?php
+include '../config/db.con.php';
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../user/login.php");
+    exit();
+}
+
+// Fetch user data from the database
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+// Check if the user is an admin
+if ($user['role'] !== 'admin') {
+    // User is not an admin, redirect to a different page
+    header("Location: ../index.php?massage=your_not_write_roles");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,7 +42,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="index.html">Hi, <?= $user['username']?></a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -32,7 +60,7 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -57,6 +85,17 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#UserManagement" aria-expanded="false" aria-controls="UserManagement">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                User Management
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="UserManagement" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="./allusers.php">All Users manage</a>
+                                    <a class="nav-link" href="./staffmanage.php">Staff Manage</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
