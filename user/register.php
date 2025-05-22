@@ -13,28 +13,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'] ?? ''; 
     $role = 'customer'; 
 
-    
     if (empty($username) || empty($fullname) || empty($email) || empty($phone) || empty($password) || empty($confirmPassword)) {
         echo "All fields are required.";
     } elseif ($password !== $confirmPassword) {
         echo "Passwords do not match.";
     } else {
-        
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        // Check if email already exists
+        $checkStmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
+        $checkStmt->bind_param("s", $email);
+        $checkStmt->execute();
+        $checkStmt->store_result();
 
-        // Prepare and execute SQL statement
-        $stmt = $conn->prepare("INSERT INTO users (username, password_hash, role, full_name, phone, email, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssss", $username, $passwordHash, $role, $fullname, $phone, $email, $address);
-
-        if ($stmt->execute()) {
-            echo "<script>alert('Registration successful! Please login.'); window.location.href='login.php';</script>";
-            exit;
+        if ($checkStmt->num_rows > 0) {
+            echo "<script>alert('Email already registered. Please use another email.'); window.history.back();</script>";
         } else {
-            echo "Error: " . $stmt->error;
-        }
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        // Close statement and connection
-        $stmt->close();
+            // Prepare and execute SQL statement
+            $stmt = $conn->prepare("INSERT INTO users (username, password_hash, role, full_name, phone, email, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssss", $username, $passwordHash, $role, $fullname, $phone, $email, $address);
+
+            if ($stmt->execute()) {
+                echo "<script>alert('Registration successful! Please login.'); window.location.href='login.php';</script>";
+                exit;
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
+        $checkStmt->close();
         $conn->close();
     }
 }

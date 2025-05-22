@@ -1,3 +1,31 @@
+<?php
+include '../config/db.con.php';
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../user/login.php");
+    exit();
+}
+
+// Fetch user data from the database
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+// Check if the user is an admin
+if ($user['role'] !== 'admin') {
+    // User is not an admin, redirect to a different page
+    header("Location: ../index.php?massage=your_not_write_roles");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
