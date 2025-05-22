@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <a href="user/contact.html" class="nav-item nav-link">Contact</a>
-                <a href="./include/logout.php" class="nav-item nav-link">LogOut</a>
+                <a href="./auth/logout.php" class="nav-item nav-link">LogOut</a>
             </div>
             <a href="" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>

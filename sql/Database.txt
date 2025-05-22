@@ -1,0 +1,88 @@
+-- Create Database
+CREATE DATABASE IF NOT EXISTS loreal_salon;
+USE loreal_salon;
+
+-- Users Table (Combined Admin & Customer)
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'staff', 'customer') NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    address TEXT,
+    specialization VARCHAR(100), -- Only relevant for staff (can be null)
+    availability TINYINT(1) DEFAULT 1, -- Only relevant for staff (can be null)
+    hire_date DATE, -- Only relevant for staff
+    registration_date DATE DEFAULT CURRENT_DATE, -- For customers
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE staff (
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNIQUE,
+    specialization VARCHAR(100),
+    availability TINYINT(1) DEFAULT 1,
+    hire_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Services Table
+CREATE TABLE services (
+    service_id INT AUTO_INCREMENT PRIMARY KEY,
+    service_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    duration_minutes INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Appointments Table (Now just links user and staff)
+CREATE TABLE appointments (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    staff_id INT,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE SET NULL
+);
+
+-- Appointment Services (Many-to-Many: One Appointment can have many services)
+CREATE TABLE appointment_services (
+    appointment_service_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT,
+    service_id INT,
+    quantity INT DEFAULT 1,
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
+    UNIQUE (appointment_id, service_id)
+);
+
+-- Payments Table
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT UNIQUE,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50),
+    payment_status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    transaction_id VARCHAR(100),
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE
+);
+
+-- Feedback Table
+CREATE TABLE feedback (
+    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    appointment_id INT,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE
+);
