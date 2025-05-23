@@ -6,10 +6,6 @@ INSERT INTO users (username, password_hash, role, full_name, phone, email, addre
 ('customer1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 'John Doe', '0779876543', 'john@example.com', '123 Main St, Colombo'),
 ('customer2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 'Mary Smith', '0778887766', 'mary@example.com', '456 Queen Ave, Dehiwala');
 
--- Insert Staff
-INSERT INTO staff (user_id, specialization) VALUES
-(2, 'Hair Stylist'),
-(3, 'Facial Specialist');
 
 -- Insert Services
 INSERT INTO services (service_name, description, price, duration_minutes) VALUES

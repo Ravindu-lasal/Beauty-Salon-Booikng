@@ -19,14 +19,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE staff (
-    staff_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNIQUE,
-    specialization VARCHAR(100),
-    availability TINYINT(1) DEFAULT 1,
-    hire_date DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
 
 -- Services Table
 CREATE TABLE services (
