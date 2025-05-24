@@ -40,8 +40,7 @@
                                         <th>Role</th>
                                         <th>Specialization</th>
                                         <th>Availability</th>
-                                        <th>Hire Date</th>
-                                        <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -54,8 +53,7 @@
                                         <th>Role</th>
                                         <th>Specialization</th>
                                         <th>Availability</th>
-                                        <th>Hire Date</th>
-                                        <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
 
@@ -77,8 +75,8 @@
                                                 <td><?= htmlspecialchars($row['role']) ?></td>
                                                 <td><?= htmlspecialchars($row['specialization']) ?></td>
                                                 <td><?= $row['availability'] ? 'Yes' : 'No' ?></td>
-                                                <td><?= htmlspecialchars($row['hire_date']) ?></td>
                                                 <td>
+                                                    <div class="d-flex justify-content-center align-items-center gap-1 flex-nowrap">
                                                     <button 
                                                         class="btn btn-sm btn-primary editBtn"
                                                         data-user-id="<?php echo $row['user_id']; ?>"
@@ -94,6 +92,7 @@
                                                         onclick="return confirm('Are you sure you want to delete this user?');">
                                                         Delete
                                                     </a>
+                                                    </div>
                                                 </td>
 
                                                 <?php include 'models/staffedit.php'; ?>

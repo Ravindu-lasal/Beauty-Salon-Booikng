@@ -1,7 +1,7 @@
 <!-- Add Staff Modal -->
 <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <form method="POST" action="./auth/staffadd.php">
+    <form method="POST" action="./auth/staffadd.auth.php">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addStaffModalLabel">Add New Staff</h5>

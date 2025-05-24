@@ -22,7 +22,7 @@
                                     <i class="fas fa-table me-1"></i>
                                     All Users
                                 </div>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServicesModal">Add Services</button>
                             </div>
                             
                             <div class="card-body">
@@ -67,9 +67,13 @@
                                                 <td><?= htmlspecialchars($row['duration_minutes']); ?> mins</td>
                                                 <td><?= htmlspecialchars($row['created_at']); ?></td>
                                                 <td>
-                                                    <a href="edit_service.php?id=<?= $row['service_id']; ?>" class="btn btn-sm btn-primary">Edit</a>
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServicesModal<?php echo $row['service_id']; ?>">Update</button>
+                                                   
                                                     <a href="delete.php?table=services&id=<?= $row['service_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this service?');">Delete</a>
                                                 </td>
+
+                                                <?php include 'models/servicesadd.php'; ?>
+                                                <?php include 'models/servicesedit.php'; ?>
                                             </tr>
                                         <?php endwhile; ?>
                                     <?php else: ?>

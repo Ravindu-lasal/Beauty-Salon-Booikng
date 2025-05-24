@@ -1,7 +1,7 @@
 <!-- Edit Modal -->
         <div class="modal fade" id="editStaffModal<?php echo $row['user_id']; ?>" tabindex="-1" aria-labelledby="editStaffModalLabel<?php echo $row['user_id']; ?>" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form method="POST" action="./auth/staffedit.php" id="editStaffForm<?php echo $row['user_id']; ?>">
+                <form method="POST" action="./auth/staffedit.auth.php" id="editStaffForm<?php echo $row['user_id']; ?>">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editStaffModalLabel<?php echo $row['user_id']; ?>">Edit Staff - <?php echo htmlspecialchars($row['full_name']); ?></h5>

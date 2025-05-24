@@ -1,7 +1,7 @@
     <!-- Edit Modal for this User -->
                                             <div class="modal fade" id="editUserModal<?php echo $row['user_id']; ?>" tabindex="-1" aria-labelledby="editUserLabel<?php echo $row['user_id']; ?>" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <form method="POST" action="./auth/useredit.php">
+                                                    <form method="POST" action="./auth/useredit.auth.php">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="editUserLabel<?php echo $row['user_id']; ?>">Edit User: <?php echo htmlspecialchars($row['username']); ?></h5>

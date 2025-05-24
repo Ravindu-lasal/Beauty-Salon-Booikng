@@ -45,7 +45,7 @@ if ($user['role'] !== 'admin') {
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
         <div id="actionToast" class="toast align-items-center border-0" role="alert">
             <div class="d-flex">
-            <div class="toast-body" id="toastMessage">Status Message</div>
+            <div class="toast-body text-light" id="toastMessage">Status Message</div>
             <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         </div>
@@ -66,8 +66,17 @@ if ($user['role'] !== 'admin') {
                     case 'updated':
                     message = 'User updated successfully!';
                     break;
+
                     case 'deleted':
-                    message = 'User deleted successfully!';
+                    message = 'Deleted successfully!';
+                    break;
+
+                    case 'service_added':
+                    message = 'service add successfully!';
+                    break;
+
+                    case 'service_updated':
+                    message = 'Service Update successfully!';
                     break;
                     default:
                     message = 'Action completed.';
