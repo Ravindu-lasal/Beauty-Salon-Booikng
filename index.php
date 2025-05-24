@@ -1,3 +1,11 @@
+
+<?php
+require_once 'config/db.con.php';
+session_start();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,9 +59,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="user/index.html" class="nav-item nav-link active">Home</a>
-                <a href="user/about.html" class="nav-item nav-link">About</a>
-                <a href="user/service.html" class="nav-item nav-link">Service</a>
+                <a href="#" class="nav-item nav-link active">Home</a>
+                <a href="user/about.php" class="nav-item nav-link">About</a>
+                <a href="user/service.php" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
@@ -62,13 +70,13 @@
                         <a href="user/open.html" class="dropdown-item">Working Hours</a>
                         <a href="user/testimonial.html" class="dropdown-item">Testimonial</a>
                         <a href="user/404.html" class="dropdown-item">404 Page</a>
-                        <a href="user/appointment.html" class="dropdown-item">Appointment</a>
+                        <a href="user/appointment.php" class="dropdown-item">Appointment</a>
                     </div>
                 </div>
                 <a href="user/contact.html" class="nav-item nav-link">Contact</a>
                 <a href="./auth/logout.php" class="nav-item nav-link">LogOut</a>
             </div>
-            <a href="" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="./user/appointment.php" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -156,92 +164,40 @@
                 <h1 class="text-uppercase">What We Provide</h1>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid rounded-circle" src="./user/img/services.png" alt="Haircut">
-                        </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Women's Haircut & Styling</h3>
-                            <p>Precision haircuts and elegant styles that match your personality and lifestyle.</p>
-                            <span class="text-uppercase text-primary">From $25</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
+                <?php
+                $sql = "SELECT * FROM services ORDER BY created_at DESC LIMIT 6";
+                $result = $conn->query($sql);
 
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid" src="user/img/hair-dyeing.png" alt="Hair Coloring">
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
+                                <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                    <img class="img-fluid rounded-circle" src="./user/img/services.png" alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                                </div>
+                                <div class="ps-4">
+                                    <h3 class="text-uppercase mb-3"><?php echo htmlspecialchars($row['service_name']); ?></h3>
+                                    <p><?php echo htmlspecialchars($row['description']); ?></p>
+                                    <span class="text-uppercase text-primary">From LKR <?php echo number_format($row['price'], 2); ?></span>
+                                </div>
+                                <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
+                            </div>
                         </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Hair Coloring & Highlights</h3>
-                            <p>Transform your look with expert coloring using premium L’Oréal products.</p>
-                            <span class="text-uppercase text-primary">From $40</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
+                        <?php
+                    }
+                } else {
+                    echo "<p>No services available.</p>";
+                }
 
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid" src="user/img/facial.png" alt="Facials">
-                        </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Facials & Skin Care</h3>
-                            <p>Deep cleansing, rejuvenation, and glow-enhancing facials for all skin types.</p>
-                            <span class="text-uppercase text-primary">From $30</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
+                $conn->close();
+                ?>
 
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid" src="user/img/makeup.png" alt="Makeup">
-                        </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Makeup Services</h3>
-                            <p>From casual glam to bridal perfection, we offer professional makeup for every occasion.</p>
-                            <span class="text-uppercase text-primary">From $50</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
 
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid" src="user/img/manicure.png" alt="Manicure">
-                        </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Manicure & Pedicure</h3>
-                            <p>Relax and refresh with our detailed nail care and spa treatments.</p>
-                            <span class="text-uppercase text-primary">From $20</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
-                        <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                            <img class="img-fluid" src="user/img/waxing.png" alt="Waxing">
-                        </div>
-                        <div class="ps-4">
-                            <h3 class="text-uppercase mb-3">Body Waxing</h3>
-                            <p>Silky smooth skin with gentle and precise waxing services for all areas of the body.</p>
-                            <span class="text-uppercase text-primary">From $15</span>
-                        </div>
-                        <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
-                    </div>
-                </div>
+                
             </div>
             <div class="text-center mx-auto mb-5 wow fadeInUp mt-5" data-wow-delay="0.1s" style="max-width: 600px;">
-                <a href="" class="d-inline-block bg-dark text-danger py-1 px-4">More services</a>
+                <a href="./user/service.php" class="d-inline-block bg-dark text-danger py-1 px-4">More services</a>
             </div>
         </div>
     </div>

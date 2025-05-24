@@ -1,75 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>LOREAL</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Oswald:wght@600&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
-
-
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-secondary navbar-dark sticky-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <a href="#" class="navbar-brand ms-4 ms-lg-0">
-            <h1 class="mb-0 text-primary text-uppercase"><i class="fa fa-spa me-3"></i>LOREAL</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="price.html" class="dropdown-item">Pricing Plan</a>
-                        <a href="team.html" class="dropdown-item">Our Barber</a>
-                        <a href="open.html" class="dropdown-item">Working Hours</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-            </div>
-            <a href="" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+<?php
+include 'includes/header.php';
+include 'includes/navigation.php';
+?>
 
 
     <!-- Page Header Start -->
@@ -94,45 +26,66 @@
                 <p class="d-inline-block bg-secondary text-primary py-1 px-4">Book Now</p>
                 <h1 class="text-uppercase">Make An Appointment</h1>
             </div>
-            <form action="">
+            <form action="./auth/book_appointment.php" method="POST">
                 <div class="row g-5">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="d-flex flex-column">
                             <div class="row g-3">
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control bg-transparent" id="name" placeholder="Your Name">
+                                            <input type="text" class="form-control bg-transparent" id="name" name="name" placeholder="Your Name">
                                             <label for="name">Your Name</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control bg-transparent" id="email" placeholder="Your Email">
+                                            <input type="email" class="form-control bg-transparent" id="email" name="email" placeholder="Your Email">
                                             <label for="email">Your Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="tel" class="form-control bg-transparent" id="phone" placeholder="Your Phone">
+                                            <input type="tel" class="form-control bg-transparent" id="phone" name="phone" placeholder="Your Phone">
                                             <label for="phone">Your Phone</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="date" class="form-control bg-transparent" id="date" placeholder="Appointment Date">
+                                            <input type="date" class="form-control bg-transparent" id="date" name="date" placeholder="Appointment Date">
                                             <label for="date">Appointment Date</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="time" class="form-control bg-transparent" id="time" placeholder="Appointment Time">
+                                            <input type="time" class="form-control bg-transparent" id="time" name="time" placeholder="Appointment Time">
                                             <label for="time">Appointment Time</label>
                                         </div>
                                     </div>
+                                    <?php
+                                        // Fetch staff from the database
+                                        $sql = "SELECT user_id, full_name, specialization FROM users WHERE role = 'staff' AND availability = 1";
+                                        $result = $conn->query($sql);
+                                        ?>
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control bg-transparent" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
+                                            <select class="form-select bg-transparent" id="barber" name="user_id" aria-label="Select Barber" required>
+                                                <option selected>Not select Beautician</option>
+                                                <?php while($staff = $result->fetch_assoc()) { ?>
+                                                    <option value="<?php echo $staff['user_id']; ?>">
+                                                        <?php echo htmlspecialchars($staff['full_name']); ?> 
+                                                        <?php if (!empty($staff['specialization'])) { echo " - " . htmlspecialchars($staff['specialization']); } ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                            <label for="barber">Selected Beautician</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <textarea class="form-control bg-transparent" placeholder="Leave a message here" id="message" name="message" style="height: 100px"></textarea>
                                             <label for="message">Message</label>
                                         </div>
                                     </div>
@@ -141,50 +94,47 @@
                         </div>
                     </div>
 
-                    <style>
-                
-                    </style>
-
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <div class="bg-secondary h-100 d-flex flex-column justify-content-center p-5">
                             <p class="d-inline-flex bg-dark text-primary py-1 px-4 me-auto">Services</p>
                             <h1 class="text-uppercase mb-4">Select our services</h1>
                             <div class="d-flex flex-column justify-content-center ">
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="haircut" id="haircut">
-                                    <h6 class="text-uppercase mb-0">Haircut & Styling</h6>
-                                    <span class="text-uppercase text-primary">$29.00</span>
+                                <?php
+                                $sql = "SELECT * FROM services ORDER BY created_at DESC";
+                                $result = $conn->query($sql);
+
+                                if ($result && $result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                            <input type="checkbox" name="services[]" id="<?php echo htmlspecialchars($row['service_name']); ?>" value="<?php echo htmlspecialchars($row['price']); ?>" class="service-checkbox" onchange="calculateTotal()">
+                                            <h6 class="text-uppercase mb-0"><?php echo htmlspecialchars($row['service_name']); ?></h6>
+                                            <span class="text-uppercase text-primary">LKR <?php echo number_format($row['price'], 2); ?></span>
+                                        </div>
+                                        <?php
+                                    }
+                                }else {
+                                    echo "<p>No services available.</p>";
+                                }
+
+                                $conn->close();
+                                ?>
+                                
+                                <div class="d-flex justify-content-between align-items-center border-bottom py-2 mt-3">
+                                    <strong>Total:</strong>
+                                    <span id="totalPrice" class="text-uppercase text-primary">LKR 0.00</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="haircolor" id="haircolor">
-                                    <h6 class="text-uppercase mb-0">Hair Coloring</h6>                        
-                                    <span class="text-uppercase text-primary">$35.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="facial" id="facial">
-                                    <h6 class="text-uppercase mb-0">Facial & Skin Care</h6>                        
-                                    <span class="text-uppercase text-primary">$45.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="makeup" id="makeup">
-                                    <h6 class="text-uppercase mb-0">Makeup</h6>                        
-                                    <span class="text-uppercase text-primary">$50.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="haircut" id="haircut">
-                                    <h6 class="text-uppercase mb-0">Haircut & Styling</h6>
-                                    <span class="text-uppercase text-primary">$29.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="haircolor" id="haircolor">
-                                    <h6 class="text-uppercase mb-0">Hair Coloring</h6>                        
-                                    <span class="text-uppercase text-primary">$35.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                    <input type="checkbox" name="facial" id="facial">
-                                    <h6 class="text-uppercase mb-0">Facial & Skin Care</h6>                        
-                                    <span class="text-uppercase text-primary">$45.00</span>
-                                </div>
+
+                                <script>
+                                function calculateTotal() {
+                                    let total = 0;
+                                    document.querySelectorAll('.service-checkbox:checked').forEach(function(cb) {
+                                        total += parseFloat(cb.value);
+                                    });
+                                    document.getElementById('totalPrice').textContent = 'LKR ' + total.toFixed(2);
+                                }
+                                </script>
+                                
                                 
                             </div>
                             

@@ -10,7 +10,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">All Users</h1>
+                        <h1 class="mt-4">Services</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">admin/all usres</li>
                         </ol>
@@ -20,7 +20,7 @@
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <div>
                                     <i class="fas fa-table me-1"></i>
-                                    All Users
+                                    All Services
                                 </div>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServicesModal">Add Services</button>
                             </div>
