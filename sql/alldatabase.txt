@@ -1,0 +1,124 @@
+-- Create Database
+CREATE DATABASE IF NOT EXISTS loreal_salon;
+USE loreal_salon;
+
+-- Users Table (Combined Admin, Staff & Customer)
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'staff', 'customer') NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    address TEXT,
+    image_path TEXT,
+    specialization VARCHAR(100),
+    availability BOOLEAN DEFAULT TRUE,
+    hire_date DATE,
+    registration_date DATE DEFAULT CURRENT_DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Services Table
+CREATE TABLE IF NOT EXISTS services (
+    service_id INT AUTO_INCREMENT PRIMARY KEY,
+    service_name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
+    duration_minutes INT NOT NULL CHECK (duration_minutes > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Appointments Table
+CREATE TABLE IF NOT EXISTS appointments (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    staff_id INT,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Appointment Services Table
+CREATE TABLE IF NOT EXISTS appointment_services (
+    appointment_service_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    service_id INT NOT NULL,
+    quantity INT DEFAULT 1 CHECK (quantity > 0),
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
+    UNIQUE (appointment_id, service_id)
+);
+
+-- Payments Table
+CREATE TABLE IF NOT EXISTS payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL UNIQUE,
+    amount DECIMAL(10, 2) NOT NULL CHECK (amount >= 0),
+    payment_method VARCHAR(50),
+    payment_status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    transaction_id VARCHAR(100),
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE
+);
+
+-- Feedback Table
+CREATE TABLE IF NOT EXISTS feedback (
+    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    appointment_id INT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE
+);
+
+-- Dummy Data Inserts
+-- Users Table
+INSERT INTO users (username, password_hash, role, full_name, phone, email, address, image_path, specialization, availability, hire_date, registration_date, created_at)
+VALUES
+('admin1', SHA2('Admin@123', 256), 'admin', 'Alice Manager', '1234567890', 'alice.manager@loreal.com', '123 Main St', NULL, NULL, 1, NULL, NULL, NOW()),
+('beautypro1', SHA2('Beauty123', 256), 'staff', 'Bella Stylist', '2345678901', 'bella.stylist@loreal.com', '456 Beauty Blvd', 'bella.jpg', 'Hair Stylist', 1, '2023-01-15', NULL, NOW()),
+('skinexpert1', SHA2('Skin456', 256), 'staff', 'Sophie Aesthetician', '3456789012', 'sophie.aesthetician@loreal.com', '789 Skin Ave', 'sophie.jpg', 'Skin Care', 1, '2022-11-10', NULL, NOW()),
+('johndoe', SHA2('John123', 256), 'customer', 'John Doe', '4567890123', 'john.doe@gmail.com', '321 Customer Rd', NULL, NULL, 1, NULL, '2024-05-20', NOW()),
+('janedoe', SHA2('Jane456', 256), 'customer', 'Jane Doe', '5678901234', 'jane.doe@yahoo.com', '654 Customer Ln', NULL, NULL, 1, NULL, '2024-04-10', NOW());
+
+-- Services Table
+INSERT INTO services (service_name, description, price, duration_minutes, created_at)
+VALUES
+('Haircut', 'Professional haircut service', 50.00, 60, NOW()),
+('Hair Coloring', 'Custom hair coloring and highlights', 120.00, 120, NOW()),
+('Facial', 'Deep cleansing facial treatment', 80.00, 90, NOW()),
+('Manicure', 'Nail care and polish', 30.00, 45, NOW());
+
+-- Appointments Table
+INSERT INTO appointments (user_id, staff_id, appointment_date, appointment_time, status, notes, created_at)
+VALUES
+(4, 2, '2025-05-30', '10:00:00', 'confirmed', 'Haircut and facial', NOW()),
+(5, 3, '2025-05-31', '14:30:00', 'pending', 'Facial treatment', NOW()),
+(4, NULL, '2025-06-01', '09:00:00', 'pending', 'Self-service booking', NOW());
+
+-- Appointment Services Table
+INSERT INTO appointment_services (appointment_id, service_id, quantity)
+VALUES
+(1, 1, 1),
+(1, 3, 1),
+(2, 3, 1);
+
+-- Payments Table
+INSERT INTO payments (appointment_id, amount, payment_method, payment_status, transaction_id, payment_date)
+VALUES
+(1, 130.00, 'Credit Card', 'completed', 'TXN12345', NOW()),
+(2, 80.00, 'Cash', 'pending', NULL, NOW());
+
+-- Feedback Table
+INSERT INTO feedback (user_id, appointment_id, rating, comment, submitted_at)
+VALUES
+(4, 1, 5, 'Great service and friendly staff!', NOW()),
+(5, 2, 4, 'Loved the facial, but had to wait a bit.', NOW());

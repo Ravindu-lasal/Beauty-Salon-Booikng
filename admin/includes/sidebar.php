@@ -75,11 +75,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Services
                             </a>
+                            <a class="nav-link" href="appointment.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Appointment
+                            </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>
+                    
                 </nav>
             </div>

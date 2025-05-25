@@ -13,6 +13,7 @@ CREATE TABLE users (
     email VARCHAR(100),
     address TEXT,
     specialization VARCHAR(100), -- Only relevant for staff (nullable)
+    image_path TEXT,
     availability BOOLEAN DEFAULT TRUE, -- More explicit than TINYINT(1)
     hire_date DATE, -- Only relevant for staff
     registration_date DATE DEFAULT CURRENT_DATE, -- For customers
