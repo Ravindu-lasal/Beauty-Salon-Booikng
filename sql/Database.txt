@@ -29,17 +29,19 @@ CREATE TABLE services (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Appointments Table
 CREATE TABLE appointments (
     appointment_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    staff_id INT, -- Reference to the beautician or staff member can be NULL
     appointment_date DATE NOT NULL,
     appointment_time TIME NOT NULL,
     status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES users(user_id) ON DELETE CASCADE -- New FK for staff
 );
+
 
 -- Appointment Services (Many-to-Many)
 CREATE TABLE appointment_services (

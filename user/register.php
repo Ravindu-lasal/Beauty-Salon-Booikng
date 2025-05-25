@@ -135,41 +135,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-transparent" id="username" name="username" placeholder="Your Name">
+                                        <input type="text" class="form-control bg-transparent" id="username" name="username" placeholder="Your Name" required>
                                         <label for="username">Your Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-transparent" id="fullname" name="fullname" placeholder="Your FullName">
+                                        <input type="text" class="form-control bg-transparent" id="fullname" name="fullname" placeholder="Your FullName" required>
                                         <label for="fullname">Your FullName</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control bg-transparent" id="email" name="email" placeholder="Your Email">
+                                        <input type="email" class="form-control bg-transparent" id="email" name="email" placeholder="Your Email" required>
                                         <label for="email">Your Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-transparent" id="phone" name="phone" placeholder="Your Phone">
+                                        <input type="text" class="form-control bg-transparent" id="phone" name="phone" placeholder="Your Phone" required>
                                         <label for="phone">Your Phone</label>
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control bg-transparent" id="password" name="password">
+                                        <input type="password" class="form-control bg-transparent" id="password" name="password" required>
                                         <label for="password">Your password</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control bg-transparent" id="confirmPassword" name="confirmPassword">
+                                        <input type="password" class="form-control bg-transparent" id="confirmPassword" name="confirmPassword" required>
                                         <label for="confirmPassword">Confirm password</label>
                                     </div>
                                 </div>
+                                <div class="col-12"> 
+                                    <div class="">
+                                        <label class="form-check-label" for="showPassword">
+                                            Already have an account? 
+                                        </label>
+                                        <a href="login.php">Login</a>
+                                        
+                                    </div>
+                                </div>
+                                
 
                               
                                 <div class="col-12">

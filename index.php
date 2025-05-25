@@ -181,7 +181,7 @@ session_start();
                                     <p><?php echo htmlspecialchars($row['description']); ?></p>
                                     <span class="text-uppercase text-primary">From LKR <?php echo number_format($row['price'], 2); ?></span>
                                 </div>
-                                <a class="btn btn-square" href="#"><i class="fa fa-plus text-primary"></i></a>
+                                    <a class="btn btn-square" href="./user/appointment.php?select_id=<?php echo($row['service_id'])?>"><i class="fa fa-plus text-primary"></i></a>
                             </div>
                         </div>
                         <?php

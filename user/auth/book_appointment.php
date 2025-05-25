@@ -1,51 +1,59 @@
 <?php
-require_once '../../config/db.con.php'; // Database connection
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Retrieve and sanitize form inputs
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $staff_id = $_POST['staff_id'];
-    $message = trim($_POST['message']);
-    $services = isset($_POST['services']) ? $_POST['services'] : [];
-
-    // Insert or retrieve user (assume user not logged in)
-    $stmt = $conn->prepare("INSERT INTO users (full_name, email, phone, role) VALUES (?, ?, ?, 'customer')");
-    $stmt->bind_param("sss", $name, $email, $phone);
-    if (!$stmt->execute()) {
-        die("Error inserting user: " . $conn->error);
+include '../../config/db.con.php'; // Your DB connection
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if the user is logged in
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        echo "You must be logged in to book an appointment.";
+        exit;
     }
-    $user_id = $conn->insert_id;
-    $stmt->close();
 
-    // Insert appointment
-    $stmt = $conn->prepare("INSERT INTO appointments (user_id, staff_id, appointment_date, appointment_time, notes) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iisss", $user_id, $staff_id, $date, $time, $message);
-    if (!$stmt->execute()) {
-        die("Error inserting appointment: " . $conn->error);
+    // Validate and sanitize input
+    $user_id = $_SESSION['user_id']; // Use session user_id
+    $date = $_POST['date'] ?? null;
+    $time = $_POST['time'] ?? null;
+    $beautician_id = !empty($_POST['staff_id']) ? $_POST['staff_id'] : null;
+    $message = $_POST['message'] ?? '';
+    $services = $_POST['services'] ?? [];
+
+    // Validate required fields except beautician_id
+    if (empty($date) || empty($time) || empty($message) || empty($services)) {
+        echo "<script>alert('Date, time, message, and at least one service are required.'); window.history.back();</script>";
+        
+        exit;
     }
-    $appointment_id = $conn->insert_id;
-    $stmt->close();
 
-    // Insert selected services
     if (!empty($services)) {
-        $stmt = $conn->prepare("INSERT INTO appointment_services (appointment_id, service_id) VALUES (?, ?)");
-        foreach ($services as $service_id) {
-            $stmt->bind_param("ii", $appointment_id, $service_id);
-            if (!$stmt->execute()) {
-                die("Error inserting service: " . $conn->error);
-            }
+        // Insert appointment (no total_price)
+        $stmt = $conn->prepare("INSERT INTO appointments (user_id, staff_id, appointment_date, appointment_time, notes) VALUES (?, ?, ?, ?, ?)");
+        // Use "i" for user_id, "i" or "null" for staff_id
+        if ($beautician_id !== null) {
+            $stmt->bind_param("iisss", $user_id, $beautician_id, $date, $time, $message);
+        } else {
+            // Use "NULL" for staff_id by setting it explicitly
+            $stmt = $conn->prepare("INSERT INTO appointments (user_id, staff_id, appointment_date, appointment_time, notes) VALUES (?, NULL, ?, ?, ?)");
+            $stmt->bind_param("isss", $user_id, $date, $time, $message);
         }
-        $stmt->close();
-    }
 
-    // Success
-    header("Location: ../user/confirmation.php?success=1");
-    exit;
-} else {
-    echo "Invalid request.";
+        if ($stmt->execute()) {
+            $appointment_id = $stmt->insert_id;
+            $stmt->close();
+
+            // Insert selected services
+            $stmt = $conn->prepare("INSERT INTO appointment_services (appointment_id, service_id) VALUES (?, ?)");
+            foreach ($services as $service_id) {
+                $stmt->bind_param("ii", $appointment_id, $service_id);
+                $stmt->execute();
+            }
+            $stmt->close();
+
+            echo "Appointment booked successfully!";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+    } else {
+        echo "Please select at least one service.";
+    }
 }
+$conn->close();
 ?>
