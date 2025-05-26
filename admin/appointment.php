@@ -1,20 +1,47 @@
+<?php
+    require_once '../config/db.con.php';
+    if (isset($_GET['confirmid'])) {
+        $appointment_id = $_GET['confirmid'];
+        $update_sql = "UPDATE appointments SET status='confirmed' WHERE appointment_id='$appointment_id'";
+        if ($conn->query($update_sql) === TRUE) {
+            echo '<script>alert("Appointment confirmed successfully!"); window.location.href="appointment.php";</script>';
+        }
+        else {
+            echo '<script>alert("Error confirming appointment: ' . $conn->error . '");</script>';
+        }
+        }
 
+    if (isset($_GET['canceledid'])) {
+        $appointment_id = $_GET['canceledid'];
+        $update_sql = "UPDATE appointments SET status='cancelled' WHERE appointment_id='$appointment_id'";
+        if ($conn->query($update_sql) === TRUE) {
+            // Redirect with success message in URL
+            header("Location: appointment.php?msg=appointment_cancelled");
+            exit();
+        }    else {
+            echo '<script>alert("Error cancelling appointment: ' . $conn->error . '");</script>';
+        }
+    }
+
+    if (isset($_GET['completeid'])) {
+        $appointment_id = $_GET['completeid'];
+        $update_sql = "UPDATE appointments SET status='completed' WHERE appointment_id='$appointment_id'";
+        if ($conn->query($update_sql) === TRUE) {
+            // Redirect with success message in URL
+            header("Location: appointment.php?msg=appointment_completed");
+            exit();
+        }
+        else {
+            echo '<script>alert("Error completing appointment: ' . $conn->error . '");</script>';
+        }
+    }
+
+?>
 
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/navigation.php'; ?>
 
-<?php
- if (isset($_GET['confirmid'])) {
-    $appointment_id = $_GET['confirmid'];
-    $update_sql = "UPDATE appointments SET status='confirmed' WHERE appointment_id='$appointment_id'";
-    if ($conn->query($update_sql) === TRUE) {
-        echo '<script>alert("Appointment confirmed successfully!"); window.location.href="appointment.php";</script>';
-    }
-    else {
-        echo '<script>alert("Error confirming appointment: ' . $conn->error . '");</script>';
-    }
-    }
-?>
+
         
         <div id="layoutSidenav">
             
@@ -35,7 +62,7 @@
                                     <i class="fas fa-table me-1"></i>
                                     All Appoinment
                                 </div>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStaffModal">Add Appoinment</button>
+                                
                             </div>
 
                             <div class="card-body">
@@ -85,9 +112,9 @@
                                         <td><?= $row['staff_name'] ?? 'Unassigned' ?></td>
                                         <td>
                                             <?php if ($row['status'] == 'pending'){
-                                                echo '<a href="appointment.php?confirmid=' . $row['appointment_id'] . '" class="btn btn-success btn-sm">Confirm</a>';
+                                                echo '<span class="badge bg-warning">Pending</span>';
                                             }
-                                            elseif ($row['status'] == 'confirmed') {
+                                              elseif ($row['status'] == 'confirmed') {
                                                 echo '<span class="badge bg-success">Confirmed</span>';
                                             } elseif ($row['status'] == 'cancelled') {
                                                 echo '<span class="badge bg-danger">Cancelled</span>';
@@ -98,80 +125,43 @@
                                         <td>
                                             <div class="text-center d-flex flex-nowrap gap-2 justify-content-center">
                                             <?php if ($row['status'] == 'pending'){
-                                                echo '<a href="appointment.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm">Cancel</a>';
+                                                echo '<button class="btn btn-primary btn-sm" disabled>Edit</button>';
+                                                echo '<a href="appointment.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to cancel this appointment?\')">Cancel</a>'; 
                                             }
                                             elseif ($row['status'] == 'confirmed') {
                                                 echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAppointmentModal' . $row['appointment_id'] . '">Edit</button>';
-                                                echo '<a href="appointment.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm">Cancel</a>';
+                                                echo '<a href="appointment.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to cancel this appointment?\')">Cancel</a>'; 
                                             } elseif ($row['status'] == 'cancelled') {
                                                 echo '<button class="btn btn-secondary btn-sm" disabled>Cancelled</button>';
                                             } elseif ($row['status'] == 'completed') {
-                                                echo '<button class="btn btn-info btn-sm text-light" disabled>Completed</button>';
+                                                echo '<button class="btn btn-info btn-sm text-light">Completed</button>';
                                             } ?>
                                             </div>
                                            
                                         </td>
                                         <td>
                                             <div class="text-center d-flex flex-nowrap gap-2 justify-content-center">
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal' . $row['appointment_id'] . '">View</button>
-                                                <a href="" class="btn btn-primary btn-sm text-center">Manage</a>
+                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal<?= $row['appointment_id'] ?>">View</button>
+                                                <?php
+                                                if ($row['status'] == 'pending') {
+                                                    echo '<a href="appointment.php?confirmid=' . $row['appointment_id'] . '" class="btn btn-success btn-sm">Confirm</a>';
+                                                }
+                                                elseif ($row['status'] == 'confirmed') {
+                                                echo '<a href="appointment.php?completeid=' . $row['appointment_id'] . '" class="btn btn-info btn-sm" onclick="return confirm(\'Are you sure you want to complete this appointment?\')">Complete</a>'; 
+                                                }
+                                                elseif ($row['status'] == 'cancelled') {
+                                                    echo '<button class="btn btn-secondary btn-sm" disabled>Billing</button>';
+                                                }
+                                                elseif ($row['status'] == 'completed') {
+                                                    echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-primary btn-sm"> Billing </a>';
+                                                }
+                                                ?>
                                             </div>                                            
                                         </td>
                                     </tr>
 
-                                    <!-- Modal Form (preloaded) -->
-                                    <div class="modal fade" id="editAppointmentModal<?= $row['appointment_id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['appointment_id'] ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                        <form action="update_appointment.php" method="post">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title">Edit Appointment #<?= $row['appointment_id'] ?></h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.reload()"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                            <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
-
-                                            <label>Customer: <?= htmlspecialchars($row['customer_name']) ?></label><br>
-                                            <label>Date: <?= $row['appointment_date'] ?> Time: <?= $row['appointment_time'] ?></label><br><br>
-
-                                            <!-- Staff Dropdown -->
-                                            <label>Assign Staff</label>
-                                            <select name="staff_id" class="form-select">
-                                                <option value="">-- Select Staff --</option>
-                                                <?php
-                                                $staff_result = $conn->query("SELECT user_id, username FROM users WHERE role='staff'");
-                                                while($staff = $staff_result->fetch_assoc()):
-                                                ?>
-                                                <option value="<?= $staff['user_id'] ?>" <?= ($staff['user_id'] == $row['staff_id']) ? 'selected' : '' ?>>
-                                                    <?= htmlspecialchars($staff['username']) ?>
-                                                </option>
-                                                <?php endwhile; ?>
-                                            </select>
-
-                                            <h5 class="mt-3">Select Services</h5>
-                                            <?php
-                                            $services_result = $conn->query("SELECT service_id, service_name, price FROM services");
-                                            $selected_result = $conn->query("SELECT service_id FROM appointment_services WHERE appointment_id=" . $row['appointment_id']);
-                                            $selected_services = [];
-                                            while($sel = $selected_result->fetch_assoc()) { $selected_services[] = $sel['service_id']; }
-                                            while($service = $services_result->fetch_assoc()):
-                                            ?>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="services[]" value="<?= $service['service_id'] ?>"
-                                                <?= in_array($service['service_id'], $selected_services) ? 'checked' : '' ?>>
-                                                <label class="form-check-label">
-                                                <?= htmlspecialchars($service['service_name']) ?> (LKR <?= number_format($service['price'], 2) ?>)
-                                                </label>
-                                            </div>
-                                            <?php endwhile; ?>
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="location.reload();">Cancel</button>    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                            </div>
-                                        </form>
-                                        </div>
-                                    </div>
-                                    </div>
+                                    <?php include 'models/appointment_edit.php'; ?>
+                                    <?php include 'models/appointment_view.php'; ?>
 
                                     <?php endwhile; ?>
                                     <?php else: ?>
