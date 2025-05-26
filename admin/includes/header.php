@@ -78,6 +78,22 @@ if ($user['role'] !== 'admin') {
                     case 'service_updated':
                     message = 'Service Update successfully!';
                     break;
+
+                    case 'appointment_updated':
+                    message = 'Appointment updated successfully!';
+                    break;
+
+                    case 'appointment_deleted':
+                    message = 'Appointment deleted successfully!';
+                    break;
+
+                    case 'appointment_completed':
+                    message = 'Appointment marked as completed!';
+                    break;
+                    case 'appointment_cancelled':
+                    message = 'Appointment cancelled successfully!';
+                    break;
+                    
                     default:
                     message = 'Action completed.';
                 }

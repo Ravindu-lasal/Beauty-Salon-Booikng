@@ -150,10 +150,10 @@
                                                 echo '<a href="appointment.php?completeid=' . $row['appointment_id'] . '" class="btn btn-info btn-sm" onclick="return confirm(\'Are you sure you want to complete this appointment?\')">Complete</a>'; 
                                                 }
                                                 elseif ($row['status'] == 'cancelled') {
-                                                    echo '<button class="btn btn-secondary btn-sm" disabled>Billing</button>';
+                                                    echo '<button class="btn btn-secondary btn-sm" disabled>Invoice</button>';
                                                 }
                                                 elseif ($row['status'] == 'completed') {
-                                                    echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-primary btn-sm"> Billing </a>';
+                                                    echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-primary btn-sm"> Invoice </a>';
                                                 }
                                                 ?>
                                             </div>                                            
