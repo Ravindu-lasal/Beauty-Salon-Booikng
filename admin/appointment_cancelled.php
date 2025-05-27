@@ -38,6 +38,28 @@
 
 ?>
 
+<?php
+
+if (isset($_GET['deleteid'])) {
+    $appointment_id = intval($_GET['deleteid']); // Ensure it's an integer to prevent SQL injection
+
+    $sql = "DELETE FROM appointments WHERE appointment_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $appointment_id);
+
+    if ($stmt->execute()) {
+        // Optionally, redirect or show success message
+        header("Location: appointment_cancelled.php?msg=appointment_deleted");
+        exit;
+    } else {
+        echo "Error deleting appointment: " . $conn->error;
+    }
+
+    $stmt->close();
+}
+
+?>
+
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/navigation.php'; ?>
 
@@ -158,6 +180,8 @@
                                                     echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-primary btn-sm"> Invoice </a>';
                                                 }
                                                 ?>
+                                                <a class="btn btn-danger btn-sm" href="appointment_cancelled.php?deleteid=<?php echo $row['appointment_id'] ?>">Delete</a>
+
                                             </div>                                            
                                         </td>
                                     </tr>

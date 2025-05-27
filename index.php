@@ -62,9 +62,9 @@ session_start();
                     <img class="w-100" src="user/img/carousel-1.jpg" alt="Image">
                     <div class="carousel-caption d-flex align-items-center justify-content-center text-start">
                         <div class="mx-sm-5 px-5" style="max-width: 900px;">
-                            <h1 class="display-2 text-white text-uppercase mb-4 animated slideInDown">We Will Keep You An Awesome Look</h1>
-                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA</h4>
-                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</h4>
+                            <h1 class="display-2 text-white text-uppercase mb-4 animated slideInDown">Feel Gorgeous, Look Flawless</h1>
+                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-map-marker-alt text-primary me-3"></i> 191/A KALUBOVILA ROAD, DHEHIWALA.</h4>
+                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-phone-alt text-primary me-3"></i> 0712345965</h4>
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,9 @@ session_start();
                     <img class="w-100" src="user/img/carousel-2.jpg" alt="Image">
                     <div class="carousel-caption d-flex align-items-center justify-content-center text-start">
                         <div class="mx-sm-5 px-5" style="max-width: 900px;">
-                            <h1 class="display-2 text-white text-uppercase mb-4 animated slideInDown">Luxury Haircut at Affordable Price</h1>
-                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA</h4>
-                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</h4>
+                            <h1 class="display-2 text-white text-uppercase mb-4 animated slideInDown">Radiate Confidence, Shine with Style</h1>
+                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-map-marker-alt text-primary me-3"></i>191/A KALUBOVILA ROAD, DHEHIWALA.</h4>
+                            <h4 class="text-white text-uppercase mb-4 animated slideInDown"><i class="fa fa-phone-alt text-primary me-3"></i>0712345965</h4>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ session_start();
                     <div class="d-flex flex-column">
                         <img class="img-fluid w-75 align-self-end" src="user/img/about.jpg" alt="Loreal Women's Salon">
                         <div class="w-50 bg-secondary p-5" style="margin-top: -25%;">
-                            <h1 class="text-uppercase text-primary mb-3">25 Years</h1>
+                            <h1 class="text-uppercase text-primary mb-3">20 Years</h1>
                             <h2 class="text-uppercase mb-0">Of Glamour & Grace</h2>
                         </div>
                     </div>
@@ -233,7 +233,7 @@ session_start();
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="bg-secondary h-100 d-flex flex-column justify-content-center p-5">
                         <p class="d-inline-flex bg-dark text-primary py-1 px-4 me-auto">Working Hours</p>
-                        <h1 class="text-uppercase mb-4">Professional Barbers Are Waiting For You</h1>
+                        <h1 class="text-uppercase mb-4">Professional Beautician Are Waiting For You</h1>
                         <div>
                             <div class="d-flex justify-content-between border-bottom py-2">
                                 <h6 class="text-uppercase mb-0">Monday</h6>

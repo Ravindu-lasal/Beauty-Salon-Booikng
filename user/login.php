@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($user['role'] === 'admin') {
                     echo "<script>alert('Login successful!'); window.location.href='../admin/index.php';</script>";
                 } elseif ($user['role'] === 'staff') {
-                    echo "<script>alert('Login successful!'); window.location.href='../admin/index.php';</script>";
+                    echo "<script>alert('Login successful!'); window.location.href='./staff_appoinment.php';</script>";
                 } elseif ($user['role'] === 'customer') {
                     echo "<script>alert('Login successful!'); window.location.href='../index.php';</script>";
                 } else {
