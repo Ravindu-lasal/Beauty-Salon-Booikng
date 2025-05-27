@@ -34,13 +34,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="#" class="dropdown-item">Hi, <?php echo $_SESSION['username']?></a>
                         <?php endif; ?>
-                        
-                        <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'staff'): ?>
-                            <div><hr class="dropdown-divider" /></div>
-                            <a href="<?php echo $baseURL; ?>staff_appoinment.php" class="dropdown-item <?php echo ($currentPage == 'staff_appoinment.php') ? 'active' : ''; ?>">Staff Appoinment</a>
-                        <?php endif; ?>
 
-                        <a href="<?php echo $baseURL; ?>staff_appoinment.php" class="dropdown-item <?php echo ($currentPage == 'staff_appoinment.php') ? 'active' : ''; ?>">Staff Appoinment</a>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'staff'): ?>
+                            <div><hr class="dropdown-divider" /></div>
+                            <a href="<?php echo $baseURL; ?>staff_appoinment.php" class="dropdown-item <?php echo ($currentPage == 'staff_appoinment.php') ? 'active' : ''; ?>">Staff Appointment</a>
+                        <?php endif; ?>
                         <a href="<?php echo $baseURL; ?>price.php" class="dropdown-item <?php echo ($currentPage == 'price.php') ? 'active' : ''; ?>">Pricing Plan</a>
                         <a href="<?php echo $baseURL; ?>team.php" class="dropdown-item <?php echo ($currentPage == 'team.php') ? 'active' : ''; ?>">Our Beautician</a>
                         <a href="<?php echo $baseURL; ?>open.php" class="dropdown-item <?php echo ($currentPage == 'open.php') ? 'active' : ''; ?>">Working Hours</a>
