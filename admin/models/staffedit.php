@@ -1,7 +1,7 @@
 <!-- Edit Modal -->
         <div class="modal fade" id="editStaffModal<?php echo $row['user_id']; ?>" tabindex="-1" aria-labelledby="editStaffModalLabel<?php echo $row['user_id']; ?>" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form method="POST" action="./auth/staffedit.auth.php" id="editStaffForm<?php echo $row['user_id']; ?>">
+                <form method="POST" action="./auth/staffedit.auth.php" id="editStaffForm<?php echo $row['user_id']; ?>" enctype="multipart/form-data">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editStaffModalLabel<?php echo $row['user_id']; ?>">Edit Staff - <?php echo htmlspecialchars($row['full_name']); ?></h5>
@@ -13,6 +13,10 @@
                             <div class="mb-3 col-md-6">
                                 <label for="username<?php echo $row['user_id']; ?>" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username<?php echo $row['user_id']; ?>" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="image<?php echo $row['user_id']; ?>" class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="image<?php echo $row['user_id']; ?>" name="image" accept="image/*"> 
                             </div>
                             <div class="mb-3 col-md-12">
                                 <label for="fullName<?php echo $row['user_id']; ?>" class="form-label">Full Name</label>

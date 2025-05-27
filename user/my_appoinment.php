@@ -28,8 +28,8 @@ if ($user_id) {
 
 <?php
 
-if (isset($_GET['id'])) {
-    $appointment_id = intval($_GET['id']);
+if (isset($_GET['cancelid'])) {
+    $appointment_id = intval($_GET['cancelid']);
 
     $sql = "UPDATE appointments SET status = 'Cancelled' WHERE appointment_id = ?";
     $stmt = $conn->prepare($sql);
@@ -42,8 +42,6 @@ if (isset($_GET['id'])) {
     } else {
         echo "Error cancelling appointment.";
     }
-} else {
-    echo "Invalid request.";
 }
 ?>
 
@@ -104,7 +102,7 @@ if (isset($_GET['id'])) {
                                                 echo '<span class="text-success">Completed</span>';
                                             } else { 
                                                 // Output the cancel button correctly
-                                                echo '<a href="my_appoinment.php?id=' . htmlspecialchars($row['appointment_id']) . '" class="btn btn-danger btn-sm">Cancel</a>';
+                                                echo '<a href="my_appoinment.php?cancelid=' . htmlspecialchars($row['appointment_id']) . '" class="btn btn-danger btn-sm">Cancel</a>';
                                             }
                                         ?>
                                     </td>

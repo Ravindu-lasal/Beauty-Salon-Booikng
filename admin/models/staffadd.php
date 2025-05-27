@@ -1,7 +1,7 @@
 <!-- Add Staff Modal -->
 <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <form method="POST" action="./auth/staffadd.auth.php">
+    <form method="POST" action="./auth/staffadd.auth.php" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addStaffModalLabel">Add New Staff</h5>
@@ -17,9 +17,13 @@
               <label class="form-label">Password</label>
               <input type="password" name="password" class="form-control" required>
             </div>
-            <div class="mb-3 col-md-12">
+            <div class="mb-3 col-md-6">
               <label class="form-label">Full Name</label>
               <input type="text" name="full_name" class="form-control" required>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label">Upload Image</label>
+              <input type="file" name="image" class="form-control" accept="image/*">
             </div>
             <div class="mb-3 col-md-6">
               <label class="form-label">Email</label>

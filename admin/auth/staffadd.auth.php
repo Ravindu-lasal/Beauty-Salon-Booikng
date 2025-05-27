@@ -11,14 +11,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $specialization = $_POST['specialization'] ?? null;
     $availability   = isset($_POST['availability']) ? (int)$_POST['availability'] : 0;
     $hire_date      = !empty($_POST['hire_date']) ? $_POST['hire_date'] : null;
+    $image      = $_FILES['image'] ?? null;
+
+
+    $image_filename = null;
+    if ($image && $image['error'] === UPLOAD_ERR_OK) {
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $image_filename = uniqid('staff_', true) . '.' . $ext;
+        $upload_dir = '../../user/img/uploads/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        move_uploaded_file($image['tmp_name'], $upload_dir . $image_filename);
+    }
 
     // Securely hash password
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     // SQL Insert
     $stmt = $conn->prepare("INSERT INTO users 
-        (username, password_hash, role, full_name, email, phone, specialization, availability, hire_date) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        (username, password_hash, role, full_name, email, phone, specialization, availability, hire_date, image_path) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     if (!$stmt) {
         $error = urlencode("Prepare failed: " . $conn->error);
@@ -27,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt->bind_param(
-        "sssssssis",
+        "sssssssiss",
         $username,
         $password_hash,
         $role,
@@ -36,7 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone,
         $specialization,
         $availability,
-        $hire_date
+        $hire_date,
+        $image_filename
     );
 
     if ($stmt->execute()) {

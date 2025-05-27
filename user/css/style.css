@@ -376,3 +376,19 @@
                     outline: 2px solid #007bff;
                     outline-offset: 2px;
                 }
+
+
+
+/* img styles */
+                .team-img {
+                    position: relative;
+                    width: 100%;
+                    height: 280px; /* fixed container height */
+                    overflow: hidden;
+                }
+
+                .team-img img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover; /* ensures all images fill the space uniformly */
+                }

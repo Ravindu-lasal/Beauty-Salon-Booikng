@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $stmt->close();
 
-            echo "Appointment booked successfully!";
+            echo "<script>alert('Appointment booked successfully.'); window.location.href='../my_appoinment.php';</script>";
         } else {
             echo "Error: " . $stmt->error;
         }

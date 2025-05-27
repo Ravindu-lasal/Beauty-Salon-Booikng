@@ -9,9 +9,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email       = trim($_POST['email']);
     $phone       = trim($_POST['phone']);
     $specialization = trim($_POST['specialization'] ?? '');
-    $role        = $_POST['role'];
+    $role        = trim($_POST['role']);
     $availability = isset($_POST['availability']) ? (int)$_POST['availability'] : 0;
     $hire_date   = !empty($_POST['hire_date']) ? $_POST['hire_date'] : null;
+    $image       = $_FILES['image'] ?? null;
+
+    $image_filename = null;
+    if ($image && $image['error'] === UPLOAD_ERR_OK) {
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $image_filename = uniqid('staff_', true) . '.' . $ext;
+        $upload_dir = '../../user/img/uploads/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        move_uploaded_file($image['tmp_name'], $upload_dir . $image_filename);
+    }
 
     // Prepare update query
     $stmt = $conn->prepare("UPDATE users SET 
@@ -20,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         email = ?, 
         phone = ?, 
         role = ?, 
+        image_path = COALESCE(?, image_path),
         specialization = ?, 
         availability = ?, 
         hire_date = ?
@@ -32,12 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt->bind_param(
-        "ssssssisi",
+        "sssssssisi",
         $username,
         $full_name,
         $email,
         $phone,
         $role,
+        $image_filename,
         $specialization,
         $availability,
         $hire_date,

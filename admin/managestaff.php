@@ -33,8 +33,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>image</th>
                                         <th>Username</th>
-                                        <th>Full Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Role</th>
@@ -46,8 +46,8 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
+                                        <th>image</th>
                                         <th>Username</th>
-                                        <th>Full Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Role</th>
@@ -68,8 +68,13 @@
                                         <?php $i = 1;  while ($row = $result->fetch_assoc()): ?>
                                             <tr>
                                                 <td><?php echo $i++; ?></td>
-                                                <td><?= htmlspecialchars($row['username']) ?></td>
-                                                <td><?= htmlspecialchars($row['full_name']) ?></td>
+                                                <td>
+                                                    <?php if (!empty($row['image_path'])): ?>
+                                                        <img src="../user/img/uploads/<?= htmlspecialchars($row['image_path']) ?>" alt="Staff Image" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+                                                    <?php else: ?>
+                                                        <span>No Image</span>
+                                                    <?php endif; ?>
+                                                </td>    <td><?= htmlspecialchars($row['username']) ?></td>
                                                 <td><?= htmlspecialchars($row['email']) ?></td>
                                                 <td><?= htmlspecialchars($row['phone']) ?></td>
                                                 <td><?= htmlspecialchars($row['role']) ?></td>
