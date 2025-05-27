@@ -49,37 +49,9 @@ session_start();
     <!-- Spinner End -->
 
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-secondary navbar-dark sticky-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <a href="#" class="navbar-brand ms-4 ms-lg-0">
-            <h1 class="mb-0 text-primary text-uppercase"><i class="fa fa-spa me-3"></i>LOREAL</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="#" class="nav-item nav-link active">Home</a>
-                <a href="user/about.php" class="nav-item nav-link">About</a>
-                <a href="user/service.php" class="nav-item nav-link">Service</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="user/price.php" class="dropdown-item">Pricing Plan</a>
-                        <a href="user/team.php" class="dropdown-item">Our Barber</a>
-                        <a href="user/open.php" class="dropdown-item">Working Hours</a>
-                        <a href="user/testimonial.php" class="dropdown-item">Testimonial</a>
-                        <a href="user/4php" class="dropdown-item">404 Page</a>
-                        <a href="user/appointment.php" class="dropdown-item">Appointment</a>
-                    </div>
-                </div>
-                <a href="user/contact.php" class="nav-item nav-link">Contact</a>
-                <a href="./auth/logout.php" class="nav-item nav-link">LogOut</a>
-            </div>
-            <a href="./user/appointment.php" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+    <?php
+    include 'user/includes/navigation.php';
+    ?>
 
 
     <!-- Carousel Start -->

@@ -33,11 +33,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <a href="<?php echo $baseURL; ?>price.php" class="dropdown-item <?php echo ($currentPage == 'price.php') ? 'active' : ''; ?>">Pricing Plan</a>
                         <a href="<?php echo $baseURL; ?>team.php" class="dropdown-item <?php echo ($currentPage == 'team.php') ? 'active' : ''; ?>">Our Barber</a>
                         <a href="<?php echo $baseURL; ?>open.php" class="dropdown-item <?php echo ($currentPage == 'open.php') ? 'active' : ''; ?>">Working Hours</a>
-                        <a href="<?php echo $baseURL; ?>testimonial.php" class="dropdown-item <?php echo ($currentPage == 'testimonial.php') ? 'active' : ''; ?>">Testimonial</a>
-                        <a href="<?php echo $baseURL; ?>appointment.php" class="dropdown-item <?php echo ($currentPage == 'appointment.php') ? 'active' : ''; ?>">Appointment</a>
+                        <a href="<?php echo $baseURL; ?>appointment.php" class="dropdown-item <?php echo ($currentPage == 'appointment.php') ? 'active' : ''; ?>">Appointment</a>  
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <div><hr class="dropdown-divider" /></div>
+                            <a href="<?php echo $baseURL; ?>../auth/logout.php" class="dropdown-item">Sign Out</a>
+                        <?php endif; ?>
+                        
                     </div>
                 </div>
-                <a href="<?php echo $baseURL; ?>contact.php" class="nav-item nav-link <?php echo ($currentPage == 'contact.php') ? 'active' : ''; ?>">Contact</a>
+                
                 <a href="<?php echo $baseURL; ?>../auth/logout.php" class="nav-item nav-link">LogOut</a>
             </div>
             <a href="<?php echo $baseURL; ?>appointment.php" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
