@@ -1,4 +1,4 @@
-    <!-- Footer Start -->
+   <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -8,19 +8,19 @@
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-map-marker-alt text-primary"></span>
                         </div>
-                        <span>123 Street, New York, USA</span>
+                        <span>191/A KALUBOVILA ROAD, DHEHIWALA.</span>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-phone-alt text-primary"></span>
                         </div>
-                        <span>+012 345 67890</span>
+                        <span>071 234 5965</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-envelope-open text-primary"></span>
                         </div>
-                        <span>info@example.com</span>
+                        <span> W.W.W. loreal.com , Instagram : LO_REAL.</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">

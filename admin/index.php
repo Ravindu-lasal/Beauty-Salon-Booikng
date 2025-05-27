@@ -1,3 +1,30 @@
+<?php
+require_once '../config/db.con.php';
+
+// Count queries for all cards
+$sql_counts = [
+    'users' => "SELECT COUNT(*) AS total FROM users",
+    'staff' => "SELECT COUNT(*) AS total FROM users WHERE role='staff'",
+    'services' => "SELECT COUNT(*) AS total FROM services",
+    'appointments' => "SELECT COUNT(*) AS total FROM appointments",
+    'pending' => "SELECT COUNT(*) AS total FROM appointments WHERE status='pending'",
+    'confirmed' => "SELECT COUNT(*) AS total FROM appointments WHERE status='confirmed'",
+    'completed' => "SELECT COUNT(*) AS total FROM appointments WHERE status='completed'",
+    'cancelled' => "SELECT COUNT(*) AS total FROM appointments WHERE status='cancelled'",
+];
+
+// Fetch data
+$counts = [];
+foreach ($sql_counts as $key => $query) {
+    $result = $conn->query($query);
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $counts[$key] = $row['total'];
+    } else {
+        $counts[$key] = 0;
+    }
+}
+?>
 
 
 <?php include 'includes/header.php'; ?>
@@ -15,68 +42,126 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                         <style>
+                            .counter-card {
+                                color: white;
+                                border-radius: 1rem;
+                                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                                transition: transform 0.3s;
+                            }
+                            .counter-card:hover {
+                                transform: scale(1.05);
+                            }
+
+                            /* First row: black + gradient color */
+                            .counter-card-dark {
+                               background: linear-gradient(135deg, #6a11cb, #2575fc);
+                            }
+
+                            /* Second row: different gradient (blue-green) */
+                            .counter-card-blue-green {
+                                
+                                background: linear-gradient(135deg, #f8fafc, #e0eafc);
+                                color: #222;
+                            }
+
+                            .counter-icon {
+                                font-size: 2rem;
+                                opacity: 0.8;
+                            }
+
+                            .counter-value {
+                                font-size: 2.5rem;
+                                font-weight: bold;
+                            }
+                        </style>
+                        
+                        
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-dark p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['users'] ?></div>
+                                        <div>Users Registered</div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-dark p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['staff'] ?></div>
+                                        <div>Staff Members</div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-dark p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['services'] ?></div>
+                                        <div>All Services</div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-dark p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['appointments'] ?></div>
+                                        <div>All Appointments</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                            <div class="row">
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-blue-green p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['pending'] ?></div>
+                                        <div>Pending Appointments</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-blue-green p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['confirmed'] ?></div>
+                                        <div>Confirmed Appointments</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-blue-green p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['completed'] ?></div>
+                                        <div>Completed Appointments</div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card counter-card counter-card-blue-green p-4 text-center mb-4">
+                                        <div class="counter-icon mb-2">
+                                            <i class="bi bi-bar-chart-fill"></i>
+                                        </div>
+                                        <div class="counter-value"><?= $counts['cancelled'] ?></div>
+                                        <div>Cancelled Appointments</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
+
+
+                        <div class="card mb-4 mt-3">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Today's Appointments
+                                <b>Today's Appointments</b>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="table table-striped table-bordered">

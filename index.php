@@ -65,15 +65,15 @@ session_start();
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
-                        <a href="user/price.html" class="dropdown-item">Pricing Plan</a>
-                        <a href="user/team.html" class="dropdown-item">Our Barber</a>
-                        <a href="user/open.html" class="dropdown-item">Working Hours</a>
-                        <a href="user/testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="user/404.html" class="dropdown-item">404 Page</a>
+                        <a href="user/price.php" class="dropdown-item">Pricing Plan</a>
+                        <a href="user/team.php" class="dropdown-item">Our Barber</a>
+                        <a href="user/open.php" class="dropdown-item">Working Hours</a>
+                        <a href="user/testimonial.php" class="dropdown-item">Testimonial</a>
+                        <a href="user/4php" class="dropdown-item">404 Page</a>
                         <a href="user/appointment.php" class="dropdown-item">Appointment</a>
                     </div>
                 </div>
-                <a href="user/contact.html" class="nav-item nav-link">Contact</a>
+                <a href="user/contact.php" class="nav-item nav-link">Contact</a>
                 <a href="./auth/logout.php" class="nav-item nav-link">LogOut</a>
             </div>
             <a href="./user/appointment.php" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
@@ -338,19 +338,19 @@ session_start();
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-map-marker-alt text-primary"></span>
                         </div>
-                        <span>123 Street, New York, USA</span>
+                        <span>191/A KALUBOVILA ROAD, DHEHIWALA.</span>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-phone-alt text-primary"></span>
                         </div>
-                        <span>+012 345 67890</span>
+                        <span>071 234 5965</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="btn-square bg-dark flex-shrink-0 me-3">
                             <span class="fa fa-envelope-open text-primary"></span>
                         </div>
-                        <span>info@example.com</span>
+                        <span> W.W.W. loreal.com , Instagram : LO_REAL.</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
