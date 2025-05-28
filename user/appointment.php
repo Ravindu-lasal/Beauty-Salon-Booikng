@@ -87,17 +87,27 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-floating">
+                                        <div class="form-floating position-relative">
                                             <input type="date" class="form-control bg-transparent" id="date" name="date" placeholder="Appointment Date">
                                             <label for="date">Appointment Date</label>
+                                            <!-- Custom Icon (just for demonstration) -->
+                                            <span onclick="document.getElementById('date').showPicker()" style="position: absolute; top: 40%; right: 10px; cursor: pointer;">
+                                                📅
+                                            </span>
                                         </div>
                                     </div>
+
                                     <div class="col-12">
-                                        <div class="form-floating">
+                                        <div class="form-floating position-relative">
                                             <input type="time" class="form-control bg-transparent" id="time" name="time" placeholder="Appointment Time">
                                             <label for="time">Appointment Time</label>
+                                            <!-- Custom Icon (just for demonstration) -->
+                                            <span onclick="document.getElementById('time').showPicker()" style="position: absolute; top: 40%; right: 10px; cursor: pointer;">
+                                                ⏰
+                                            </span>
                                         </div>
                                     </div>
+
                                     <?php
                                         // Fetch staff from the database
                                         $sql = "SELECT user_id, full_name, specialization FROM users WHERE role = 'staff' AND availability = 1";
