@@ -223,7 +223,7 @@ foreach ($sql_counts as $key => $query) {
                                         
                                         <td>
                                             <div class="text-center d-flex flex-nowrap gap-2 justify-content-center">
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal<?= $row['appointment_id'] ?>">View</button>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal<?= $row['appointment_id'] ?>"><i class="fas fa-eye"></i></button>
                                             </div>                                            
                                         </td>
                                     </tr>

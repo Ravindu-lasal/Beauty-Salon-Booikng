@@ -69,12 +69,14 @@
                                                 <td><?php echo htmlspecialchars($row['role']); ?></td>
                                                 <td><?php echo htmlspecialchars($row['created_at']); ?></td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal<?php echo $row['user_id']; ?>">Edit</button>
-                                                    <a href="delete.php?table=users&id=<?php echo $row['user_id']; ?>" 
-                                                        class="btn btn-sm btn-danger" 
-                                                        onclick="return confirm('Are you sure you want to delete this user?');">
-                                                        Delete
-                                                    </a>
+                                                    <div class="d-flex justify-content-center align-items-center gap-1 flex-nowrap">
+                                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal<?php echo $row['user_id']; ?>"><i class="fas fa-edit"></i></button>
+                                                        <a href="delete.php?table=users&id=<?php echo $row['user_id']; ?>" 
+                                                            class="btn btn-sm btn-danger" 
+                                                            onclick="return confirm('Are you sure you want to delete this user?');">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
 

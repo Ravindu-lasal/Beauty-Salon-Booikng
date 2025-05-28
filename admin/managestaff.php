@@ -82,21 +82,21 @@
                                                 <td><?= $row['availability'] ? 'Yes' : 'No' ?></td>
                                                 <td>
                                                     <div class="d-flex justify-content-center align-items-center gap-1 flex-nowrap">
-                                                    <button 
-                                                        class="btn btn-sm btn-primary editBtn"
-                                                        data-user-id="<?php echo $row['user_id']; ?>"
-                                                        data-full-name="<?php echo htmlspecialchars($row['full_name']); ?>"
-                                                        data-email="<?php echo htmlspecialchars($row['email']); ?>"
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#editStaffModal<?php echo $row['user_id']; ?>">
-                                                        Edit
-                                                    </button>
+                                                        <button 
+                                                            class="btn btn-sm btn-primary editBtn"
+                                                            data-user-id="<?php echo $row['user_id']; ?>"
+                                                            data-full-name="<?php echo htmlspecialchars($row['full_name']); ?>"
+                                                            data-email="<?php echo htmlspecialchars($row['email']); ?>"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#editStaffModal<?php echo $row['user_id']; ?>">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
 
-                                                    <a href="delete.php?table=users&id=<?php echo $row['user_id']; ?>" 
-                                                        class="btn btn-sm btn-danger" 
-                                                        onclick="return confirm('Are you sure you want to delete this user?');">
-                                                        Delete
-                                                    </a>
+                                                        <a href="delete.php?table=users&id=<?php echo $row['user_id']; ?>" 
+                                                            class="btn btn-sm btn-danger" 
+                                                            onclick="return confirm('Are you sure you want to delete this user?');">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>    
                                                     </div>
                                                 </td>
 

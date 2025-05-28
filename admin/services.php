@@ -67,9 +67,12 @@
                                                 <td><?= htmlspecialchars($row['duration_minutes']); ?> mins</td>
                                                 <td><?= htmlspecialchars($row['created_at']); ?></td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServicesModal<?php echo $row['service_id']; ?>">Update</button>
+                                                    <div class="d-flex justify-content-center align-items-center gap-1 flex-nowrap">
+
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServicesModal<?php echo $row['service_id']; ?>"><i class="fas fa-edit"></i></button>
                                                    
-                                                    <a href="delete.php?table=services&id=<?= $row['service_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this service?');">Delete</a>
+                                                    <a href="delete.php?table=services&id=<?= $row['service_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this service?');"><i class="fas fa-trash-alt"></i></a>
+                                                    </div>
                                                 </td>
 
                                                 <?php include 'models/servicesadd.php'; ?>

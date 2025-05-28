@@ -114,10 +114,10 @@
                                         <td>
                                             <div class="text-center d-flex flex-nowrap gap-2 justify-content-center">
                                             <?php if ($row['status'] == 'pending'){
-                                                echo '<a href="appointment_pending.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to cancel this appointment?\')">Cancel</a>'; 
+                                                echo '<a href="appointment_pending.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-outline-danger btn-sm" onclick="return confirm(\'Are you sure you want to cancel this appointment?\')">Cancel</a>'; 
                                             }
                                             elseif ($row['status'] == 'confirmed') {
-                                                echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAppointmentModal' . $row['appointment_id'] . '">Edit</button>';
+                                                echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAppointmentModal' . $row['appointment_id'] . '">Change</button>';
                                                 echo '<a href="appointment_pending.php?canceledid=' . $row['appointment_id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to cancel this appointment?\')">Cancel</a>'; 
                                             } elseif ($row['status'] == 'cancelled') {
                                                 echo '<button class="btn btn-secondary btn-sm" disabled>Cancelled</button>';
@@ -129,10 +129,10 @@
                                         </td>
                                         <td>
                                             <div class="text-center d-flex flex-nowrap gap-2 justify-content-center">
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal<?= $row['appointment_id'] ?>">View</button>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal<?= $row['appointment_id'] ?>"><i class="fas fa-eye"></i></button>
                                                 <?php
                                                 if ($row['status'] == 'pending') {
-                                                    echo '<a href="appointment_pending.php?confirmid=' . $row['appointment_id'] . '" class="btn btn-success btn-sm">Confirm</a>';
+                                                    echo '<a href="appointment_pending.php?confirmid=' . $row['appointment_id'] . '" class="btn btn-outline-success btn-sm">Confirm</a>';
                                                 }
                                                 elseif ($row['status'] == 'confirmed') {
                                                 echo '<a href="appointment.php?completeid=' . $row['appointment_id'] . '" class="btn btn-info btn-sm" onclick="return confirm(\'Are you sure you want to complete this appointment?\')">Complete</a>'; 
@@ -141,7 +141,7 @@
                                                     echo '<button class="btn btn-secondary btn-sm" disabled>Invoice</button>';
                                                 }
                                                 elseif ($row['status'] == 'completed') {
-                                                    echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-primary btn-sm"> Invoice </a>';
+                                                    echo '<a href="billing.php?billingid=' . $row['appointment_id'] . '" class="btn btn-outline-primary btn-sm"> Invoice </a>';
                                                 }
                                                 ?>
                                             </div>                                            
