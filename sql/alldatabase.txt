@@ -83,10 +83,10 @@ CREATE TABLE IF NOT EXISTS feedback (
 -- Users Table
 INSERT INTO users (username, password_hash, role, full_name, phone, email, address, image_path, specialization, availability, hire_date, registration_date, created_at)
 VALUES
-('admin1', SHA2('Admin@123', 256), 'admin', 'Alice Manager', '1234567890', 'alice.manager@loreal.com', '123 Main St', NULL, NULL, 1, NULL, NULL, NOW()),
-('beautypro1', SHA2('Beauty123', 256), 'staff', 'Bella Stylist', '2345678901', 'bella.stylist@loreal.com', '456 Beauty Blvd', 'bella.jpg', 'Hair Stylist', 1, '2023-01-15', NULL, NOW()),
+('admin', '$2y$10$sTDM6UiMSOlKvLgAymXCi.JmwkkcXbgoRz4DOygwBCrzdXXlAMSeS', 'admin', 'Alice Manager', '1234567890', 'admin@gmail.com', '123 Main St', NULL, NULL, 1, NULL, NULL, NOW()),
+('staff', '$2y$10$aEomTXVFdW6LUDggNfIOAufVE4tu15pUQnnogWQCMXnjGSrnsO0IC', 'staff', 'Bella staff', '2345678901', 'staff@gmail.com', '456 Beauty Blvd', 'bella.jpg', 'Hair Stylist', 1, '2023-01-15', NULL, NOW()),
 ('skinexpert1', SHA2('Skin456', 256), 'staff', 'Sophie Aesthetician', '3456789012', 'sophie.aesthetician@loreal.com', '789 Skin Ave', 'sophie.jpg', 'Skin Care', 1, '2022-11-10', NULL, NOW()),
-('johndoe', SHA2('John123', 256), 'customer', 'John Doe', '4567890123', 'john.doe@gmail.com', '321 Customer Rd', NULL, NULL, 1, NULL, '2024-05-20', NOW()),
+('user', '$2y$10$9c7u.KhOSP850TO8LXlMyuO7bl.75ykNAdSeUYv.nOg2AzOvXvfz6', 'customer', 'John Doe', '4567890123', 'user@gmail.com', '321 Customer Rd', NULL, NULL, 1, NULL, '2024-05-20', NOW()),
 ('janedoe', SHA2('Jane456', 256), 'customer', 'Jane Doe', '5678901234', 'jane.doe@yahoo.com', '654 Customer Ln', NULL, NULL, 1, NULL, '2024-04-10', NOW());
 
 -- Services Table
@@ -111,14 +111,4 @@ VALUES
 (1, 3, 1),
 (2, 3, 1);
 
--- Payments Table
-INSERT INTO payments (appointment_id, amount, payment_method, payment_status, transaction_id, payment_date)
-VALUES
-(1, 130.00, 'Credit Card', 'completed', 'TXN12345', NOW()),
-(2, 80.00, 'Cash', 'pending', NULL, NOW());
 
--- Feedback Table
-INSERT INTO feedback (user_id, appointment_id, rating, comment, submitted_at)
-VALUES
-(4, 1, 5, 'Great service and friendly staff!', NOW()),
-(5, 2, 4, 'Loved the facial, but had to wait a bit.', NOW());
