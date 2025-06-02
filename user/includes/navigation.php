@@ -29,19 +29,21 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <a href="<?php echo $baseURL; ?>service.php" class="nav-item nav-link <?php echo ($currentPage == 'service.php') ? 'active' : ''; ?>">Service</a>
                 <a href="<?php echo $baseURL; ?>team.php" class="nav-item nav-link <?php echo ($currentPage == 'team.php') ? 'active' : ''; ?>">Our Beautician</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle <?php echo (in_array($currentPage, ['price.php', 'team.php', 'open.php', 'testimonial.php', '404.php', 'appointment.php'])) ? 'active' : ''; ?>" data-bs-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle <?php echo (in_array($currentPage, ['login.php', 'register.php','testimonial.php', '404.php', 'appointment.php'])) ? 'active' : ''; ?>" data-bs-toggle="dropdown">User</a>
                     <div class="dropdown-menu m-0">
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="#" class="dropdown-item">Hi, <?php echo $_SESSION['username']?></a>
+                        <?php endif; ?>
+
+                        <?php if (!isset($_SESSION['user_id'])): ?>
+                        <a href="<?php echo $baseURL; ?>login.php" class="dropdown-item <?php echo ($currentPage == 'login.php') ? 'active' : ''; ?>">Login</a>
+                        <a href="<?php echo $baseURL; ?>register.php" class="dropdown-item <?php echo ($currentPage == 'register.php') ? 'active' : ''; ?>">Register</a>
                         <?php endif; ?>
 
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'staff'): ?>
                             <div><hr class="dropdown-divider" /></div>
                             <a href="<?php echo $baseURL; ?>staff_appoinment.php" class="dropdown-item <?php echo ($currentPage == 'staff_appoinment.php') ? 'active' : ''; ?>">Staff Appointment</a>
                         <?php endif; ?>
-                        <a href="<?php echo $baseURL; ?>price.php" class="dropdown-item <?php echo ($currentPage == 'price.php') ? 'active' : ''; ?>">Pricing Plan</a>
-                        <a href="<?php echo $baseURL; ?>team.php" class="dropdown-item <?php echo ($currentPage == 'team.php') ? 'active' : ''; ?>">Our Beautician</a>
-                        <a href="<?php echo $baseURL; ?>open.php" class="dropdown-item <?php echo ($currentPage == 'open.php') ? 'active' : ''; ?>">Working Hours</a>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <div><hr class="dropdown-divider" /></div>
                             <a href="<?php echo $baseURL; ?>my_appoinment.php" class="dropdown-item <?php echo ($currentPage == 'my_appoinment.php') ? 'active' : ''; ?>">My Appoinment</a>  
@@ -50,6 +52,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         
                     </div>
                 </div>
+                
             </div>
             <a href="<?php echo $baseURL; ?>appointment.php" class="btn btn-primary rounded-0 py-2 px-lg-4 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>

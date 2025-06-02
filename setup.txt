@@ -1,0 +1,12 @@
+Database name: loreal_salon
+folder path  : C:\xampp\htdocs\Beauty-Salon-Booking
+
+
+admin:    admin@gmail.com
+password: admin123
+
+staff:    staff@gmail.com
+password: staff123
+
+user :    user@gamil.com
+password: user123
